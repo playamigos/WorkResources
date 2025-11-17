@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2020 Productions Resources</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f5f5;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 0.75rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 2rem;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        h1 {
+            font-size: 1.4rem;
+            margin: 0;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .subtitle {
+            display: none;
+        }
+
+        .search-container {
+            flex: 1;
+            max-width: 600px;
+        }
+
+        .search-box {
+            position: relative;
+        }
+
+        #searchInput {
+            width: 100%;
+            padding: 0.5rem 0.65rem 0.5rem 2.2rem;
+            font-size: 0.85rem;
+            border: none;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.95);
+        }
+
+        #searchInput:focus {
+            outline: none;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.3);
+        }
+
+        #searchInput::placeholder {
+            color: #999;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 0.65rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        main {
+            padding: 1.5rem 0 2rem;
+        }
+
+        .section {
+            background: white;
+            margin-bottom: 1rem;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+        }
+
+        .section:hover {
+            box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+        }
+
+        .section-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 0.75rem 1.25rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .section-header:hover {
+            background: linear-gradient(135deg, #5568d3 0%, #66408c 100%);
+        }
+
+        .toggle-icon {
+            transition: transform 0.3s ease;
+            font-size: 1rem;
+        }
+
+        .section.collapsed .toggle-icon {
+            transform: rotate(-90deg);
+        }
+
+        .resource-count {
+            background: rgba(255,255,255,0.2);
+            padding: 0.15rem 0.5rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            margin-left: 0.75rem;
+        }
+
+        .resources-list {
+            padding: 0.75rem 1.25rem;
+            display: grid;
+            gap: 0.5rem;
+        }
+
+        .section.collapsed .resources-list {
+            display: none;
+        }
+
+        .resource-item {
+            padding: 0.6rem 0.85rem;
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .resource-item:hover {
+            background: #f8f9ff;
+            border-color: #667eea;
+            transform: translateX(5px);
+        }
+
+        .resource-name {
+            font-weight: 500;
+            color: #333;
+            font-size: 0.9rem;
+        }
+
+        .resource-link {
+            color: #667eea;
+            text-decoration: none;
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .resource-link:hover {
+            text-decoration: underline;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 3rem;
+            color: #999;
+        }
+
+        .no-results-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        .empty-section {
+            padding: 0.75rem 1.25rem;
+            color: #999;
+            font-style: italic;
+            font-size: 0.85rem;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: white;
+            width: 90%;
+            max-width: 1000px;
+            max-height: 90vh;
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .modal-header {
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid #e0e0e0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 12px 12px 0 0;
+        }
+
+        .modal-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .breadcrumb {
+            font-size: 0.85rem;
+            opacity: 0.8;
+        }
+
+        .modal-close {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .modal-close:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: rotate(90deg);
+        }
+
+        .modal-body {
+            padding: 1.25rem;
+            overflow-y: auto;
+            flex: 1;
+        }
+
+        /* Markdown Content Styles */
+        .markdown-content {
+            line-height: 1.8;
+            color: #333;
+        }
+
+        .markdown-content h1 {
+            font-size: 1.6rem;
+            margin: 1rem 0 0.75rem;
+            padding-bottom: 0.4rem;
+            border-bottom: 2px solid #667eea;
+            color: #333;
+        }
+
+        .markdown-content h2 {
+            font-size: 1.3rem;
+            margin: 0.9rem 0 0.6rem;
+            color: #444;
+        }
+
+        .markdown-content h3 {
+            font-size: 1.1rem;
+            margin: 0.75rem 0 0.5rem;
+            color: #555;
+        }
+
+        .markdown-content h4, .markdown-content h5, .markdown-content h6 {
+            margin: 0.65rem 0 0.4rem;
+            color: #666;
+        }
+
+        .markdown-content p {
+            margin: 0.5rem 0;
+            font-size: 0.9rem;
+        }
+
+        .markdown-content a {
+            color: #667eea;
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .markdown-content a:hover {
+            border-bottom: 1px solid #667eea;
+        }
+
+        .markdown-content img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 6px;
+            margin: 0.75rem 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .markdown-content video {
+            max-width: 100%;
+            height: auto;
+            border-radius: 6px;
+            margin: 0.75rem 0;
+        }
+
+        .markdown-content code {
+            background: #f5f5f5;
+            padding: 0.15rem 0.35rem;
+            border-radius: 3px;
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 0.85em;
+            color: #e83e8c;
+        }
+
+        .markdown-content pre {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 0.75rem;
+            border-radius: 6px;
+            overflow-x: auto;
+            margin: 0.75rem 0;
+        }
+
+        .markdown-content pre code {
+            background: transparent;
+            color: inherit;
+            padding: 0;
+            font-size: 0.85rem;
+        }
+
+        .markdown-content blockquote {
+            border-left: 3px solid #667eea;
+            padding-left: 0.75rem;
+            margin: 0.75rem 0;
+            color: #666;
+            font-style: italic;
+            background: #f8f9ff;
+            padding: 0.75rem;
+            border-radius: 0 6px 6px 0;
+            font-size: 0.9rem;
+        }
+
+        .markdown-content ul, .markdown-content ol {
+            margin: 0.75rem 0;
+            padding-left: 1.5rem;
+        }
+
+        .markdown-content li {
+            margin: 0.3rem 0;
+            font-size: 0.9rem;
+        }
+
+        .markdown-content table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .markdown-content th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 0.8rem;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .markdown-content td {
+            padding: 0.8rem;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .markdown-content tr:nth-child(even) {
+            background: #f8f9ff;
+        }
+
+        .markdown-content hr {
+            border: none;
+            border-top: 2px solid #e0e0e0;
+            margin: 2rem 0;
+        }
+
+        .markdown-content .task-list-item {
+            list-style: none;
+        }
+
+        .markdown-content .task-list-item input {
+            margin-right: 0.5rem;
+        }
+
+        /* Loading spinner */
+        .loading {
+            text-align: center;
+            padding: 3rem;
+            color: #999;
+        }
+
+        .spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 0.75rem;
+                align-items: stretch;
+            }
+
+            h1 {
+                font-size: 1.2rem;
+                text-align: center;
+            }
+
+            .search-container {
+                max-width: 100%;
+            }
+
+            .container {
+                padding: 0 1rem;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .section-header {
+                padding: 0.65rem 1rem;
+                font-size: 1rem;
+            }
+
+            .resources-list {
+                padding: 0.6rem 1rem;
+            }
+
+            .resource-item {
+                padding: 0.5rem 0.7rem;
+            }
+
+            .resource-name {
+                font-size: 0.85rem;
+            }
+
+            .modal-content {
+                width: 95%;
+                max-height: 95vh;
+            }
+
+            .modal-body {
+                padding: 1rem;
+            }
+
+            .modal-title {
+                font-size: 0.95rem;
+            }
+
+            .markdown-content h1 {
+                font-size: 1.3rem;
+            }
+
+            .markdown-content h2 {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <h1>2020 Productions Resources</h1>
+                
+                <div class="search-container">
+                    <div class="search-box">
+                        <span class="search-icon">🔍</span>
+                        <input 
+                            type="text" 
+                            id="searchInput" 
+                            placeholder="Search resources..." 
+                            autocomplete="off"
+                        >
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <main id="resourcesContainer">
+            <!-- Resources will be dynamically loaded here -->
+        </main>
+    </div>
+
+    <!-- Modal for displaying markdown content -->
+    <div id="markdownModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="modalTitle">Resource</h2>
+                <button class="modal-close" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="modalContent" class="markdown-content">
+                    <!-- Markdown content will be rendered here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Include marked.js for markdown parsing -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <!-- Include KaTeX for math rendering -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <!-- Include highlight.js for code syntax highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <!-- Include Mermaid for diagrams and graphs -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10.6.1/dist/mermaid.min.js"></script>
+
+    <script>
+        let allResources = [];
+
+        // Load resources from generated JSON file
+        async function loadResources() {
+            try {
+                const response = await fetch('resources.json');
+                if (!response.ok) {
+                    throw new Error('Failed to load resources.json');
+                }
+                
+                const resourceData = await response.json();
+                allResources = [];
+                
+                // Convert JSON structure to resources array
+                for (const [section, files] of Object.entries(resourceData)) {
+                    files.forEach(file => {
+                        allResources.push({
+                            section: section,
+                            name: file.replace('.md', ''),
+                            file: file,
+                            path: `Resources/${section}/${file}`
+                        });
+                    });
+                }
+                
+                renderResources(allResources);
+            } catch (error) {
+                console.error('Error loading resources:', error);
+                document.getElementById('resourcesContainer').innerHTML = `
+                    <div class="no-results">
+                        <div class="no-results-icon">⚠️</div>
+                        <h2>Unable to load resources</h2>
+                        <p>Please run: node generate-resources.js</p>
+                    </div>
+                `;
+            }
+        }
+
+        // Initialize resources
+        async function initializeResources() {
+            await loadResources();
+        }
+
+        // Render resources by section
+        function renderResources(resources) {
+            const container = document.getElementById('resourcesContainer');
+            
+            if (resources.length === 0) {
+                container.innerHTML = `
+                    <div class="no-results">
+                        <div class="no-results-icon">📭</div>
+                        <h2>No resources found</h2>
+                        <p>Try adjusting your search terms</p>
+                    </div>
+                `;
+                return;
+            }
+
+            // Group resources by section
+            const sections = {};
+            resources.forEach(resource => {
+                if (!sections[resource.section]) {
+                    sections[resource.section] = [];
+                }
+                sections[resource.section].push(resource);
+            });
+
+            // Build HTML
+            let html = '';
+            for (const [sectionName, sectionResources] of Object.entries(sections)) {
+                const resourceCount = sectionResources.length;
+                
+                html += `
+                    <div class="section" data-section="${sectionName}">
+                        <div class="section-header" onclick="toggleSection(this)">
+                            <div>
+                                <span>${sectionName}</span>
+                                <span class="resource-count">${resourceCount} resource${resourceCount !== 1 ? 's' : ''}</span>
+                            </div>
+                            <span class="toggle-icon">▼</span>
+                        </div>
+                        <div class="resources-list">
+                `;
+
+                if (resourceCount === 0) {
+                    html += '<div class="empty-section">No resources available</div>';
+                } else {
+                    sectionResources.forEach(resource => {
+                        html += `
+                            <div class="resource-item" onclick="openResource('${resource.path}', '${resource.name}')">
+                                <span class="resource-name">📄 ${resource.name}</span>
+                                <span class="resource-link">
+                                    View →
+                                </span>
+                            </div>
+                        `;
+                    });
+                }
+
+                html += `
+                        </div>
+                    </div>
+                `;
+            }
+
+            container.innerHTML = html;
+        }
+
+        // Toggle section collapse
+        function toggleSection(header) {
+            const section = header.parentElement;
+            section.classList.toggle('collapsed');
+        }
+
+        // Open resource in modal
+        async function openResource(path, name) {
+            const modal = document.getElementById('markdownModal');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalContent = document.getElementById('modalContent');
+            
+            // Show modal with loading state
+            modal.classList.add('active');
+            
+            // Extract section from path (e.g., "Resources/AI Prompting/file.md")
+            const pathParts = path.split('/');
+            const section = pathParts[pathParts.length - 2];
+            
+            modalTitle.innerHTML = `<span class="breadcrumb">${section} ></span> ${name}`;
+            modalContent.innerHTML = '<div class="loading"><div class="spinner"></div><p>Loading resource...</p></div>';
+            
+            try {
+                // Fetch the markdown file
+                const response = await fetch(path);
+                if (!response.ok) {
+                    throw new Error('Failed to load resource');
+                }
+                
+                const markdownText = await response.text();
+                
+                // Configure marked options
+                marked.setOptions({
+                    breaks: true,
+                    gfm: true,
+                    headerIds: true,
+                    mangle: false
+                });
+                
+                // Parse markdown to HTML
+                let html = marked.parse(markdownText);
+                
+                // Process math formulas (KaTeX)
+                html = html.replace(/\$\$(.*?)\$\$/gs, (match, formula) => {
+                    try {
+                        return katex.renderToString(formula, { displayMode: true, throwOnError: false });
+                    } catch (e) {
+                        return match;
+                    }
+                });
+                
+                html = html.replace(/\$(.*?)\$/g, (match, formula) => {
+                    try {
+                        return katex.renderToString(formula, { displayMode: false, throwOnError: false });
+                    } catch (e) {
+                        return match;
+                    }
+                });
+                
+                // Fix relative paths for images and videos
+                const basePath = path.substring(0, path.lastIndexOf('/') + 1);
+                html = html.replace(/src="(?!http|\/)(.*?)"/g, `src="${basePath}$1"`);
+                html = html.replace(/href="(?!http|\/|#)(.*?)"/g, `href="${basePath}$1"`);
+                
+                // Render the content
+                modalContent.innerHTML = html;
+                
+                // Initialize syntax highlighting
+                modalContent.querySelectorAll('pre code').forEach((block) => {
+                    hljs.highlightElement(block);
+                });
+                
+                // Initialize Mermaid diagrams
+                modalContent.querySelectorAll('code.language-mermaid').forEach((block) => {
+                    const code = block.textContent;
+                    const container = document.createElement('div');
+                    container.className = 'mermaid';
+                    container.textContent = code;
+                    block.parentElement.replaceWith(container);
+                });
+                
+                mermaid.initialize({ startOnLoad: false, theme: 'default' });
+                await mermaid.run({
+                    querySelector: '.modal-body .mermaid'
+                });
+                
+            } catch (error) {
+                console.error('Error loading resource:', error);
+                modalContent.innerHTML = `
+                    <div class="no-results">
+                        <div class="no-results-icon">⚠️</div>
+                        <h2>Failed to load resource</h2>
+                        <p>${error.message}</p>
+                    </div>
+                `;
+            }
+        }
+        
+        // Close modal
+        function closeModal() {
+            const modal = document.getElementById('markdownModal');
+            modal.classList.remove('active');
+        }
+        
+        // Close modal on background click
+        document.getElementById('markdownModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+        
+        // Close modal on Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
+
+        // Search functionality
+        document.getElementById('searchInput').addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase().trim();
+            
+            if (searchTerm === '') {
+                renderResources(allResources);
+                return;
+            }
+
+            const filteredResources = allResources.filter(resource => {
+                return resource.name.toLowerCase().includes(searchTerm) ||
+                       resource.section.toLowerCase().includes(searchTerm);
+            });
+
+            renderResources(filteredResources);
+        });
+
+        // Initialize on load
+        document.addEventListener('DOMContentLoaded', initializeResources);
+    </script>
+</body>
+</html>
