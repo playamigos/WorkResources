@@ -1,14 +1,21 @@
 {
-  "AI Prompting": [],
-  "Automation": [],
+  "AI Prompting": [
+    "Image_Prompting_Guide.md",
+    "Prompting_Research.md",
+    "Video_Prompting_Guide.md"
+  ],
   "Channel Guides": [
     "Animal_Reveals.md",
-    "Brainrot.md",
+    "Brainrot_Music.md",
     "Hindu_Devotional.md",
     "Jesus_Devotional.md",
     "Mahabaratha.md",
     "Political_Meme.md",
     "Relaxing_Music.md",
-    "Survival.md"
+    "Survival_stories.md"
+  ],
+  "Technical Guides": [
+    "Camera_Angles_Guide.md",
+    "Unreal_Rendering_Guide.md"
   ]
 }
