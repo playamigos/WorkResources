@@ -98,3 +98,65 @@ A young woman in a red dress, sitting on a vintage chair in a sunlit Parisian ca
 ---
 
 *This guide will help you master AI image prompting and editing for creative, professional, and production workflows. Experiment, iterate, and combine manual and AI tools for best results!*
+
+---
+
+## 🧭 Project Context Capsule
+
+A compact, repeatable block you prepend to every image prompt to carry the project’s story, style, and constraints. Keep it stable (only change the shot lines) and concise (aim for ~60–80 tokens).
+
+### What to include
+- **Project**: one-sentence premise, audience, tone
+- **Style Bible**: 5–8 canon tags (genre, medium, palette, texture)
+- **Brand/Canon**: 2–3 signature elements (motifs, brand colors, props)
+- **Delivery**: aspect ratio, composition norms, output quality
+- **Global Negative**: always-on avoids (artifacts you never want)
+
+### Prompt Template
+```
+[PROJECT CONTEXT]
+Project: <1-sentence premise; audience; tone>
+Style Bible: <5–8 fixed tags>
+Brand/Canon: <2–3 signature elements or brand colors>
+Delivery: <AR, composition norms, quality>
+Global Negative: <always-on avoid list>
+
+[SHOT SPECIFIC]
+Subject & Action: <who + doing what>
+Camera & Composition: <lens/angle/shot size/rule-of-thirds/leading lines>
+Lighting: <mood, source, time of day>
+Environment: <location + key set details>
+Fidelity: <photoreal/anime/3D; 4K; high detail>
+References: <style ref>, <character ref>, <layout/pose ref>
+Seed/Version: <seed or model version if you rely on reproducibility>
+```
+
+### Filled Example
+```
+Project: grounded sci‑fi survival anthology; tense, hopeful; Gen‑Z audience
+Style Bible: photoreal, cinematic, 35mm look, muted teal/orange, practical lights, soft haze, shallow DoF
+Brand/Canon: cracked visor motif; suit stripe #E63946; field kit with red tag
+Delivery: 16:9, rule of thirds, clear subject separation, 4K
+Global Negative: no text, no watermark, no extra limbs, no fisheye, no overblown highlights
+
+Subject & Action: young astronaut kneeling, checking a damaged rover cable
+Camera & Composition: medium shot, low angle, 35mm, leading lines from cable
+Lighting: dusk blue hour, rim light from rover headlamp, soft fill
+Environment: windy desert plain with sparse rocks; distant comms tower silhouette
+Fidelity: photoreal, high detail, crisp materials and micro‑scratches
+References: style board image; character sheet v2 side profile; layout sketch
+Seed/Version: seed 1874; model vX.Y
+```
+
+### Consistency Tips
+- **Front-load context**: put the capsule first (early tokens often weigh more)
+- **Freeze wording**: reuse exact canon tags; avoid synonyms
+- **Stabilize capsule**: edit only the [SHOT SPECIFIC] block per image
+- **Reuse references**: attach the same style/character/layout refs across shots
+- **Track seeds**: keep seed/model notes in filenames for reproducibility
+
+### Tool-Specific Hooks (optional)
+- **Midjourney**: use style/character refs, fixed `--ar` and `--seed`, weight key terms
+- **SDXL/Comfy/Automatic1111**: ControlNet/pose for layout; prompt weighting `((term:1.3))`; fixed seed/scheduler
+- **DALL·E/Firefly**: shorter capsule; lean on high-quality references; keep negatives concise
+
