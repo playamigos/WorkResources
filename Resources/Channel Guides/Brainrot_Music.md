@@ -14,9 +14,15 @@ A comprehensive guide for creating viral music videos featuring internet brainro
 
 ---
 
+## Reference
+- [Reference 1](https://www.youtube.com/watch?v=5SFzKd8DkgE&list=RD5SFzKd8DkgE&start_radio=1)
+- [Reference 2](https://www.youtube.com/watch?v=T_NKi5KHUdI&list=RDT_NKi5KHUdI&start_radio=1)
+- [Reference 3](https://www.youtube.com/watch?v=2gMaS7x_OBw&list=RD2gMaS7x_OBw&start_radio=1)
+
+
 ## 🎭 Brainrot Character Database  
 
-[List](https://www.wikihow.com/Italian-Brainrot-Tier-List)
+[More characters](https://www.wikihow.com/Italian-Brainrot-Tier-List)
 
 ### Core Character Roster (Italian Brainrot Style)
 
