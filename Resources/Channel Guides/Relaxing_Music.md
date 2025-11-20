@@ -7,6 +7,13 @@ Create long-form, looping relaxation videos combining calming visuals with layer
 
 ---
 
+## References
+- [Video-1](https://www.youtube.com/watch?v=0wXGjnBnFUg)
+- [Video-2](https://www.youtube.com/watch?v=efIYDALzVJ4)
+- [Video-3](https://www.youtube.com/watch?v=sulgD9TQsTk)
+
+---
+
 ## Video Structure
 
 ### Formula
